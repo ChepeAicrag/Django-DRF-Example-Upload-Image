@@ -14,7 +14,9 @@ class UserSerializer(ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        user.image = validated_data["image"]        
+        image = validated_data.get('image', None)
+        if not image is None:
+            user.image = image
         user.save()
         return user
 
